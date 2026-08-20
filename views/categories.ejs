@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Categories page</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container mt-3">
+        <div class="row row-cols-3">
+        <a class="container mt-4 text-decoration-none text-dark" href="/?category=Sports">
+            <img src="/images/Sports.jpeg" class="img-fluid"
+     style="width: 350px; height: 150px; object-fit: cover;" alt="...">
+            <h5 class="card-title">Sports</h5>
+        </a>
+        <a class="container mt-4 text-decoration-none text-dark" href="/?category=Food">
+            <img src="/images/Food.jpg" class="img-fluid"
+     style="width: 350px; height: 150px; object-fit: cover;" alt="...">
+            <h5 class="card-title">Food</h5>
+        </a>
+        <a class="container mt-4 text-decoration-none text-dark" href="/?category=Travel">
+            <img src="/images/Travel.jpg" class="img-fluid"
+     style="width: 350px; height: 150px; object-fit: cover;" alt="...">
+            <h5 class="card-title">Travel</h5>
+        </a>
+        <a class="container mt-4 text-decoration-none text-dark" href="/?category=Education">
+            <img src="/images/Education.jpg" class="img-fluid"
+     style="width: 350px; height: 150px; object-fit: cover;"
+     alt="Education">
+            <h5 class="card-title">Education</h5>
+        </a>
+        <a class="container mt-4 text-decoration-none text-dark" href="/?category=Entertainment">
+            <img src="/images/Entertainment.png" class="img-fluid"
+     style="width: 350px; height: 150px; object-fit: cover;"
+     alt="Education">
+            <h5 class="card-title">Entertainment</h5>
+        </a>
+        <a class="container mt-4 text-decoration-none text-dark" href="/?category=Gaming">
+            <img src="/images/Gaming.jpg" class="img-fluid"
+     style="width: 350px; height: 150px; object-fit: cover;"
+     alt="Education">
+            <h5 class="card-title">Gaming</h5>
+        </a>
+        <a class="container mt-4 text-decoration-none text-dark" href="/?category=Technology" >
+            <img src="/images/Technology.jpg" class="img-fluid"
+     style="width: 350px; height: 150px; object-fit: cover;"
+     alt="Education">
+            <h5 class="card-title">Technology</h5>
+        </a>
+        </div>
+    </div>
+    <%- include('./partials/scripts') %>
+</body>
+</html>
