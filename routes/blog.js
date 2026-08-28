@@ -55,4 +55,37 @@ router.post("/comment/:blogId",async (req,res)=>{
   })
   return res.redirect(`/blog/${blogId}`)
 })
+
+router.get("/user/myblogs/:id",async(req,res)=>{
+  const {id}=req.params;
+  const blogs=await Blog.find({createdBy:id});
+    return res.render("myblogs",{user:req.user,blogs:blogs})
+})
+router.get("/editTitle/:id",async(req,res)=>{
+  const{id}=req.params
+  return res.render("editTitle",{user:req.user,id:id})
+})
+router.post("/editTitle/:id",async(req,res)=>{
+  const {id}=req.params;
+  const {title}=req.body
+  if(title==="" || title.trim()===""){
+    return res.render("editTitle",{error:"Empty Title",user:req.user,id:id})
+  }
+  const blog=await Blog.findByIdAndUpdate(id,{title:title})
+  return res.redirect("/")
+})
+router.get("/edit/:id",async(req,res)=>{
+  const{id}=req.params
+  const blog=await Blog.findById(id)
+  return res.render("editBlog",{user:req.user,id:id,blog})
+})
+router.post("/editBlog/:id",async(req,res)=>{
+  const {id}=req.params;
+  const {body}=req.body
+  if(body==="" || body.trim()===""){
+    return res.render("editBlog",{error:"Empty Blog",user:req.user,id:id,blog:body})
+  }
+  const blog=await Blog.findByIdAndUpdate(id,{body:body})
+  return res.redirect("/")
+})
 module.exports=router

@@ -39,6 +39,7 @@ app.get("/categories",async(req,res)=>{
         user:req.user
     })
 })
+
 app.use("/user",userRoutes)
 app.use("/blog",blogRoutes)
 app.listen(PORT,()=>console.log("Server started on Port:",PORT))

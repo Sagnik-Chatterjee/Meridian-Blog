@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Edit Title</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <h3>Edit Title</h3>
+    <form action="/blog/editTitle/<%=id%>" method="post">
+        <label for="title" class="form-label" >Enter Title</label>
+        <input type="text" class="form-control" id="title" aria-describedby="title" name="title">
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+    <%- include('./partials/scripts') %>
+</body>
+</html>

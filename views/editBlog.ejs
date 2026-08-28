@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Edit Blog</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <h3>Edit Blog Content</h3>
+    <form action="/blog/editBlog/<%=id%>" method="post">
+        <label for="body" class="form-label" >Edit Blog Content</label>
+        <textarea class="form-control" id="body" rows="15" required name="body"><%= blog.body %></textarea>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+    <%- include('./partials/scripts') %>
+</body>
+</html>
