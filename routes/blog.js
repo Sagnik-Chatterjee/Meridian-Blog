@@ -3,7 +3,7 @@ const Blog=require("../models/blog")
 const Comment=require("../models/comment")
 const multer=require("multer")
 const path=require("path")
-
+const {uploadOnCloudinary,deleteCloudinary}=require("../middlewares/cloudinary")
 const router=express.Router()
 
 const storage = multer.diskStorage({
@@ -24,11 +24,16 @@ router.get('/add-new',(req,res)=>{
 
 router.post("/",upload.single('coverImage'),async(req,res)=>{
     const{title,body,category}=req.body
+    const img=await uploadOnCloudinary(`${req.file.path}`)
+    console.log(img);
+    if(!img){
+      return res.status(400).json({error:"Cannot upload"})
+    }
     const blog=await Blog.create({
         body:body,
         title:title,
         createdBy:req.user._id,
-        coverImageURL:`/uploads/${req.file.filename}`,
+        coverImageURL:img.url,
         category:category
     })
     return res.redirect(`/blog/${blog._id}`)
@@ -87,5 +92,15 @@ router.post("/editBlog/:id",async(req,res)=>{
   }
   const blog=await Blog.findByIdAndUpdate(id,{body:body})
   return res.redirect("/")
+})
+router.delete("/delete/:id",async(req,res)=>{
+  const{id}=req.params
+  await Comment.deleteMany({ blogId:id });
+  const blog=await Blog.findByIdAndDelete(id);
+  const del=await deleteCloudinary(blog.coverImageURL);
+  if(!del){
+    return res.status(400).json({error:"Cannot delete"})
+  }
+  return res.status(200).json({blog})
 })
 module.exports=router
