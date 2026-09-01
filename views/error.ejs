@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Error</title>
+    <style> body { background-color: #f5f6fa; min-height: 100vh; display: flex; align-items: center; justify-content: center; } .error-card { max-width: 550px; width: 90%; border: none; border-radius: 18px; } .error-code { font-size: 90px; font-weight: 700; line-height: 1; } .error-message { color: #6c757d; font-size: 18px; } </style>
+</head>
+<body>
+    <div class="card error-card shadow text-center"> <div class="card-body p-5"> <!-- Status Code --> <!-- Home Button --> <a href="/" class="btn btn-primary px-4 py-2"> Go to Home </a> </div> </div>
+    <%- include('./partials/scripts') %><div class="error-code text-danger"> <%= status %> </div> <!-- Heading --> <h2 class="mt-4 mb-3"> <%= error %></h2> <!-- Error Message --> 
+</body>

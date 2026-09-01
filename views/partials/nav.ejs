@@ -20,6 +20,9 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
             <li><a class="dropdown-item" href="/blog/user/myblogs/<%= locals.user._id %>">My Blogs</a></li>
+            <% if (locals.user.role==="ADMIN") { %>
+             <li><a class="dropdown-item" href="/admin">Admin Dashboard</a></li>
+            <% } %>
           </ul>
         </li>
         <% }else{ %>

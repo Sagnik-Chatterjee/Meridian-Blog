@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Users</title>
+    <style>body { background-color: #f5f6fa; } .page-header { background-color: #212529; color: white; padding: 25px 0; } .user-card { border: none; border-radius: 15px; transition: 0.2s; } .user-card:hover { transform: translateY(-3px); } .profile-img { width: 65px; height: 65px; object-fit: cover; border-radius: 50%; border: 2px solid #dee2e6; } .user-id { font-size: 12px; color: #6c757d; word-break: break-all; } .info-label { font-size: 13px; color: #6c757d; margin-bottom: 4px; }</style>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="page-header"> <div class="container"> <div class="d-flex justify-content-between align-items-center"> <div> <h2 class="mb-1"> <i class="bi bi-people-fill me-2"></i> All Users </h2> <p class="mb-0 text-white-50"> View and manage registered users </p> </div> <a href="/admin" class="btn btn-light" > <i class="bi bi-arrow-left me-1"></i> Dashboard </a> </div> </div> </div> <!-- Main Content --> <div class="container py-5"> <h4 class="mb-4"> Users </h4> <div class="row g-4"> <% users.forEach(user => { %> <div class="col-12"> <div class="card user-card shadow-sm"> <div class="card-body p-4"> <div class="row align-items-center"> <!-- Profile Picture --> <div class="col-md-2 text-center mb-3 mb-md-0"> <img src="<%= user.profileImageURL %>" alt="Profile Picture" class="profile-img" > </div> <!-- Full Name --> <div class="col-md-3 mb-3 mb-md-0"> <div class="info-label"> Full Name </div> <div class="fw-semibold"> <%= user.fullName %> </div> </div> <!-- Email --> <div class="col-md-3 mb-3 mb-md-0"> <div class="info-label"> Email </div> <div class="fw-semibold"> <%= user.email %> </div> </div> <!-- User ID --> <div class="col-md-4"> <div class="info-label"> User ID </div> <div class="user-id"> <%= user._id %> </div> </div> </div> </div> </div> </div> <% }) %> </div> </div>
+    <%- include('./partials/scripts') %>
+</body>

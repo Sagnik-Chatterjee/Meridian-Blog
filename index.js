@@ -4,7 +4,9 @@ const mongoose=require("mongoose")
 const cookieParser=require("cookie-parser")
 const userRoutes=require("./routes/user")
 const blogRoutes=require("./routes/blog")
+const adminRoutes=require("./routes/admin")
 const Blog=require("./models/blog")
+const reportRoutes=require("./routes/report")
 require('dotenv').config();
 const { checkForAuthentication } = require('./middlewares/authentication')
 const app=express();
@@ -42,4 +44,6 @@ app.get("/categories",async(req,res)=>{
 
 app.use("/user",userRoutes)
 app.use("/blog",blogRoutes)
+app.use("/admin",adminRoutes)
+app.use("/report",reportRoutes)
 app.listen(PORT,()=>console.log("Server started on Port:",PORT))

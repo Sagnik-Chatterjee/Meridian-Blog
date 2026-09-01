@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Reported Blogs</title>
+    <style>body { background-color: #f5f6fa; } .page-header { background-color: #212529; color: white; padding: 25px 0; } .blog-card { border: none; border-radius: 15px; overflow: hidden; transition: 0.2s; } .blog-card:hover { transform: translateY(-4px); } .cover-image { width: 220px; height: 140px; object-fit: cover; border-radius: 10px; } .blog-title { font-size: 20px; font-weight: 600; } .report-count { font-size: 15px; }</style>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="page-header"> 
+        <div class="container"> 
+            <div class="d-flex justify-content-between align-items-center"> 
+                <div> 
+                    <h2 class="mb-1"> <i class="bi bi-flag-fill me-2"></i> Reported Blogs </h2> 
+                    <p class="mb-0 text-white-50"> Review blogs reported by users </p> 
+                </div> 
+                <a href="/admin" class="btn btn-light" > <i class="bi bi-arrow-left me-1"></i> Dashboard </a> 
+            </div> 
+        </div> 
+    </div> 
+    <div class="container py-5"> 
+        <div class="d-flex justify-content-between align-items-center mb-4"> 
+            <h4 class="mb-0"> Reported Blogs </h4> 
+            <span class="badge bg-danger fs-6"> <%= blogs.length %> Blogs </span> 
+        </div> 
+        <div class="row g-4"> <% blogs.forEach(blog => { %> 
+            <div class="col-12"> 
+                <div class="card blog-card shadow-sm"> 
+                    <div class="card-body p-4"> 
+                        <div class="row align-items-center"> 
+                            <div class="col-md-3 mb-3 mb-md-0"> 
+                                <img src="<%= blog.coverImageURL %>" alt="Blog Cover" class="cover-image" > 
+                            </div> 
+                            <div class="col-md-6 mb-3 mb-md-0"> 
+                                <div class="text-muted small mb-1"> Blog Title </div> 
+                                <div class="blog-title"> <%= blog.title %> </div> 
+                            </div>
+                            <div class="col-md-3 text-md-center">
+
+    <a
+        href="/admin/blog/<%= blog._id %>"
+        class="btn btn-primary"
+    >
+        <i class="bi bi-eye me-1"></i>
+        View
+    </a>
+
+</div>
+
+<div class="col-md-3 text-md-center">
+
+    <a
+        href="/blog/delete/<%= blog._id %>"
+        onclick="deleteBlog(event, '<%= blog._id %>')"
+        class="btn btn-danger"
+    >
+        <i class="bi bi-trash me-1"></i>
+        Delete
+    </a>
+
+</div>
+                            <div class="col-md-3 text-md-center"> 
+                                <div class="text-muted small mb-2"> Number of Reports </div> 
+                                <span class="badge bg-danger report-count px-3 py-2"> <i class="bi bi-flag-fill me-1"></i> <%= blog.noOfReports %> Reports </span> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+            <% }) %> 
+            <% if (blogs.length === 0) { %> 
+                <div class="text-center py-5"> <i class="bi bi-check-circle text-success" style="font-size: 60px;" ></i> 
+                    <h4 class="mt-3"> No Reported Blogs </h4> 
+                    <p class="text-muted"> There are currently no blogs reported by users. </p> 
+                </div> 
+                <% } %> 
+            </div> 
+        </div>
+        <script>
+    async function deleteBlog(event, id) {
+        event.preventDefault();
+
+        const response = await fetch(`/blog/delete/${id}`, {
+            method: "DELETE"
+        });
+            window.location.href = "/admin/reported-blogs";
+    }
+</script>
+<%- include('./partials/scripts') %>
+</body>

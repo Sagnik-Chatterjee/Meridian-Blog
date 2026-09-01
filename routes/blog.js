@@ -1,6 +1,7 @@
 const express=require("express")
 const Blog=require("../models/blog")
 const Comment=require("../models/comment")
+const Report=require("../models/report")
 const multer=require("multer")
 const path=require("path")
 const {uploadOnCloudinary,deleteCloudinary}=require("../middlewares/cloudinary")
@@ -25,7 +26,6 @@ router.get('/add-new',(req,res)=>{
 router.post("/",upload.single('coverImage'),async(req,res)=>{
     const{title,body,category}=req.body
     const img=await uploadOnCloudinary(`${req.file.path}`)
-    console.log(img);
     if(!img){
       return res.status(400).json({error:"Cannot upload"})
     }
@@ -68,6 +68,10 @@ router.get("/user/myblogs/:id",async(req,res)=>{
 })
 router.get("/editTitle/:id",async(req,res)=>{
   const{id}=req.params
+  const blog=await Blog.findById(id)
+  if(String(req.user._id)!==String(blog.createdBy)){
+    return res.render("error",{error:"Not authorized",status:400})
+  }
   return res.render("editTitle",{user:req.user,id:id})
 })
 router.post("/editTitle/:id",async(req,res)=>{
@@ -82,6 +86,9 @@ router.post("/editTitle/:id",async(req,res)=>{
 router.get("/edit/:id",async(req,res)=>{
   const{id}=req.params
   const blog=await Blog.findById(id)
+  if(String(req.user._id)!==String(blog.createdBy)){
+    return res.render("error",{error:"Not authorized",status:400})
+  }
   return res.render("editBlog",{user:req.user,id:id,blog})
 })
 router.post("/editBlog/:id",async(req,res)=>{
@@ -96,6 +103,7 @@ router.post("/editBlog/:id",async(req,res)=>{
 router.delete("/delete/:id",async(req,res)=>{
   const{id}=req.params
   await Comment.deleteMany({ blogId:id });
+  await Report.deleteMany({blogId:id})
   const blog=await Blog.findByIdAndDelete(id);
   const del=await deleteCloudinary(blog.coverImageURL);
   if(!del){
