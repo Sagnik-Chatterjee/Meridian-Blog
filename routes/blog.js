@@ -43,6 +43,9 @@ router.get("/:id",async (req,res)=>{
 const {id}=req.params
 const blog=await Blog.findById(id).populate("createdBy")
 const comment=await Comment.find({blogId:id}).populate("createdBy")
+if(!blog){
+  return res.render("error",{error:"Blog not available",status:400})
+}
 return res.render("blog",{
   user:req.user,
   blog:blog,
@@ -53,6 +56,10 @@ return res.render("blog",{
 router.post("/comment/:blogId",async (req,res)=>{
   const {content}=req.body
   const {blogId}=req.params
+  const blog=await Blog.findById(id)
+  if(!blog){
+  return res.render("error",{error:"Blog not available",status:400})
+}
   const comment=await Comment.create({
     content:content,
     blogId:blogId,
@@ -69,6 +76,9 @@ router.get("/user/myblogs/:id",async(req,res)=>{
 router.get("/editTitle/:id",async(req,res)=>{
   const{id}=req.params
   const blog=await Blog.findById(id)
+  if(!blog){
+  return res.render("error",{error:"Blog not available",status:400})
+}
   if(String(req.user._id)!==String(blog.createdBy)){
     return res.render("error",{error:"Not authorized",status:400})
   }
@@ -81,11 +91,17 @@ router.post("/editTitle/:id",async(req,res)=>{
     return res.render("editTitle",{error:"Empty Title",user:req.user,id:id})
   }
   const blog=await Blog.findByIdAndUpdate(id,{title:title})
+  if(!blog){
+  return res.render("error",{error:"Blog not available",status:400})
+}
   return res.redirect("/")
 })
 router.get("/edit/:id",async(req,res)=>{
   const{id}=req.params
   const blog=await Blog.findById(id)
+  if(!blog){
+  return res.render("error",{error:"Blog not available",status:400})
+}
   if(String(req.user._id)!==String(blog.createdBy)){
     return res.render("error",{error:"Not authorized",status:400})
   }
@@ -98,6 +114,9 @@ router.post("/editBlog/:id",async(req,res)=>{
     return res.render("editBlog",{error:"Empty Blog",user:req.user,id:id,blog:body})
   }
   const blog=await Blog.findByIdAndUpdate(id,{body:body})
+  if(!blog){
+  return res.render("error",{error:"Blog not available",status:400})
+}
   return res.redirect("/")
 })
 router.delete("/delete/:id",async(req,res)=>{
@@ -105,6 +124,9 @@ router.delete("/delete/:id",async(req,res)=>{
   await Comment.deleteMany({ blogId:id });
   await Report.deleteMany({blogId:id})
   const blog=await Blog.findByIdAndDelete(id);
+  if(!blog){
+  return res.render("error",{error:"Blog not available",status:400})
+}
   const del=await deleteCloudinary(blog.coverImageURL);
   if(!del){
     return res.status(400).json({error:"Cannot delete"})
