@@ -17,12 +17,13 @@
         <%= blog.createdBy.fullName %>
     </div>
     <div class="container mt-3"><% if (locals.user) { %>
-         <form action="/report/<%= blog._id %>" method="post">
+         <form id="reportForm" action="/report/<%= blog._id %>" method="post">
             <div class="mb-3">
-                <textarea name="content" class="form-control" placeholder="Add comment" id="floatingTextarea2" style="height: 100px"></textarea>
+                <textarea name="content" class="form-control" placeholder="Add comment" id="floatingTextarea2" style="height: 100px" required></textarea>
             </div>
             <button class="btn btn-danger" type="submit">Report</button>
         </form>
+        <div id="reportMessage"></div>
         <% } %></div>
     <div class="container mt-3">
         <h1>Comments(<%= comments.length %>)</h1>
@@ -46,5 +47,23 @@
         <% }) %>
     </div>
     <%- include('./partials/scripts') %>
+    <script>
+        const form = document.querySelector("#reportForm");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: new FormData(form)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                document.querySelector("#reportMessage").textContent =data.message;
+            }
+});
+    </script>
 </body>
 </html>
