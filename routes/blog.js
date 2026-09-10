@@ -56,7 +56,7 @@ return res.render("blog",{
 router.post("/comment/:blogId",async (req,res)=>{
   const {content}=req.body
   const {blogId}=req.params
-  const blog=await Blog.findById(id)
+  const blog=await Blog.findById(blogId)
   if(!blog){
   return res.render("error",{error:"Blog not available",status:400})
 }
