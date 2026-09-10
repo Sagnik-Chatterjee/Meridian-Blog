@@ -23,7 +23,10 @@ router.get("/reported-blogs",async(req,res)=>{
         const blogs=await Blog.find({noOfReports:{
         $gt:0
     }})
-    return res.render("reportedBlogs",{blogs,user:req.user})
+    return res.json({
+    success: true,
+    message: "Report submitted successfully and is under review."
+});
     } catch (error) {
         return res.render("error",{error:error.message,status:500})
     }
