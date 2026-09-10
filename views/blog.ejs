@@ -52,17 +52,37 @@
 
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
+            const button = form.querySelector('button[type="submit"]');
+            const textarea = form.querySelector('textarea[name="content"]');
+            button.disabled = true;
+            button.textContent = "Reporting...";
 
+            const formData = new FormData(form);
+            const content=formData.get("content")
+            try{
             const response = await fetch(form.action, {
                 method: "POST",
-                body: new FormData(form)
+                headers: {
+            "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ content })
             });
 
             const data = await response.json();
 
             if (data.success) {
                 document.querySelector("#reportMessage").textContent =data.message;
+                textarea.value = "";
+                button.textContent = "Reported";
+            }else{
+                button.disabled = false;
+                button.textContent = "Report";
             }
+        }catch(e){
+            console.log(error);
+            button.disabled = false;
+            button.textContent = "Report";
+        }
 });
     </script>
 </body>

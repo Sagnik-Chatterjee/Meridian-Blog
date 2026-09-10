@@ -19,8 +19,12 @@ const router=express.Router()
             reportedBy:req.user._id
         })
         const blog2=await Blog.findByIdAndUpdate(id,{$inc:{noOfReports:1}})
-        return res.redirect(`/blog/${id}`)
+        return res.json({
+            success: true,
+            message: "Report submitted successfully and is under review."
+        });
     }catch(e){
+        console.log(e);
         return res.render("error",{error:e.message,status:500})
     }
 
