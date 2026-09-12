@@ -11,7 +11,10 @@ const router=express.Router()
         const {id}=req.params
         const blog=await Blog.findById(id);
         if(!blog){
-            return res.render("error",{error:"Blog does not exist",status:400})
+            return res.json({
+            success: false,
+            message: "Blog does not exist."
+        });
         }
         const report=await Reports.create({
             subject:content,
@@ -25,7 +28,10 @@ const router=express.Router()
         });
     }catch(e){
         console.log(e);
-        return res.render("error",{error:e.message,status:500})
+        return res.json({
+            success: false,
+            message: "Error occured failed to report"
+        });
     }
 
  })

@@ -69,6 +69,12 @@ router.post("/comment/:blogId",async (req,res)=>{
 })
 
 router.get("/user/myblogs/:id",async(req,res)=>{
+  if(!req.user){
+        return res.render("error",{error:"Not authenticated",status:400});
+    }
+    if(String(req.user._id)!==String(blog.createdBy)){
+    return res.render("error",{error:"Not authorized",status:400})
+  }
   const {id}=req.params;
   const blogs=await Blog.find({createdBy:id});
     return res.render("myblogs",{user:req.user,blogs:blogs})

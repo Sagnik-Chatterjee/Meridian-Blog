@@ -75,6 +75,7 @@
                 textarea.value = "";
                 button.textContent = "Reported";
             }else{
+                document.querySelector("#reportMessage").textContent =data.message;
                 button.disabled = false;
                 button.textContent = "Report";
             }

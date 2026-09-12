@@ -27,6 +27,9 @@ router.post("/signin",async(req,res)=>{
     }
 })
 router.get("/logout",(req,res)=>{
+    if(!req.user){
+        return res.render("error",{error:"Not authenticated",status:400});
+    }
     return res.clearCookie("token").redirect("/")
 })
 module.exports=router
