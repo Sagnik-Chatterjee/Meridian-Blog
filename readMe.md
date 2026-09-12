@@ -4,15 +4,15 @@ A full-stack blog application built with Node.js, Express.js, MongoDB, Mongoose,
 
 Users can create and manage their own blogs, comment on other blogs, and report inappropriate content. Administrators have access to a dedicated dashboard where they can review reported blogs and delete blogs when necessary.
 
- Live Demo
+Live Demo
 
-Live Application:
-https://meridian-blog.onrender.com
+Meridian Blog
 
-GitHub Repository:
-https://github.com/Sagnik-Chatterjee/Meridian-Blog
+GitHub Repository
 
- Features
+Meridian Blog - GitHub
+
+Features
 User Features
 User registration and login
 JWT-based authentication
@@ -36,7 +36,7 @@ View reported blogs
 View reports associated with a blog
 Delete blogs
 Manage reported content
- Tech Stack
+Tech Stack
 Backend
 Node.js
 Express.js
@@ -50,75 +50,75 @@ CSS
 JavaScript
 Server-Side Rendering (SSR)
 Other Technologies
-Cloudinary — image storage
-Multer — file upload handling
-Cookie Parser — cookie handling
-dotenv — environment variable management
- Application Architecture
+Cloudinary - Image storage
+Multer - File upload handling
+Cookie Parser - Cookie handling
+dotenv - Environment variable management
+Application Architecture
 
 The application follows a server-side rendered architecture where Express handles the application logic and EJS templates generate the HTML that is sent to the browser.
 
                         Browser
-                           │
-                           ▼
-                     Express Server
-                           │
-          ┌────────────────┼────────────────┐
-          │                │                │
-          ▼                ▼                ▼
-   Authentication   Authorization        Routes
-      Middleware       Middleware           │
-                                            │
-              ┌─────────────┬───────────────┼─────────────┐
-              │             │               │             │
-              ▼             ▼               ▼             ▼
-            /user         /blog           /report       /admin
-              │             │               │             │
-              └─────────────┴───────────────┴─────────────┘
-                                            │
-                                            ▼
-                                         Mongoose
-                                            │
-                                            ▼
-                                         MongoDB
+                           |
+                           v
+                    Express Server
+                           |
+          +----------------+----------------+
+          |                |                |
+          v                v                v
+   Authentication   Authorization         Routes
+      Middleware       Middleware            |
+                                             |
+              +--------------+---------------+--------------+
+              |              |               |              |
+              v              v               v              v
+            /user          /blog           /report        /admin
+              |              |               |              |
+              +--------------+---------------+--------------+
+                                             |
+                                             v
+                                          Mongoose
+                                             |
+                                             v
+                                          MongoDB
 
                         Blog Images
-                             │
-                             ▼
+                             |
+                             v
                          Cloudinary
- Project Structure
+Project Structure
 Meridian-Blog/
-│
-├── middlewares/
-│   ├── authentication.js
-│   ├── authorization.js
-│   └── cloudinary.js
-│
-├── models/
-│   ├── blog.js
-│   ├── comment.js
-│   ├── report.js
-│   └── user.js
-│
-├── public/
-│   └── ...
-│
-├── routes/
-│   ├── admin.js
-│   ├── blog.js
-│   ├── report.js
-│   └── user.js
-│
-├── services/
-│   └── authentication.js
-│
-├── views/
-│   └── ...
-│
-├── .gitignore
-├── index.js
-├── package.json
-└── package-lock.json
+|
++-- middlewares/
+|   +-- authentication.js
+|   +-- authorization.js
+|   +-- cloudinary.js
+|
++-- models/
+|   +-- blog.js
+|   +-- comment.js
+|   +-- report.js
+|   +-- user.js
+|
++-- public/
+|   +-- ...
+|
++-- routes/
+|   +-- admin.js
+|   +-- blog.js
+|   +-- report.js
+|   +-- user.js
+|
++-- services/
+|   +-- authentication.js
+|
++-- views/
+|   +-- ...
+|
++-- .gitignore
++-- index.js
++-- package.json
++-- package-lock.json
 🗄️ Data Models
 
 The application contains four main MongoDB/Mongoose models.
@@ -128,12 +128,13 @@ User
 Stores user account information and role information.
 
 User
-├── fullName
-├── email
-├── password
-├── salt
-├── profileImageURL
-└── role
+|
++-- fullName
++-- email
++-- password
++-- salt
++-- profileImageURL
++-- role
 
 Users can have different roles, including regular users and administrators.
 
@@ -142,14 +143,15 @@ Blog
 Stores the content and metadata of each blog.
 
 Blog
-├── title
-├── category
-├── body
-├── coverImageURL
-├── createdBy
-├── noOfReports
-├── createdAt
-└── updatedAt
+|
++-- title
++-- category
++-- body
++-- coverImageURL
++-- createdBy
++-- noOfReports
++-- createdAt
++-- updatedAt
 
 Each blog is associated with the user who created it.
 
@@ -158,11 +160,12 @@ Comment
 Stores comments made by users on blogs.
 
 Comment
-├── content
-├── createdBy
-├── blogId
-├── createdAt
-└── updatedAt
+|
++-- content
++-- createdBy
++-- blogId
++-- createdAt
++-- updatedAt
 
 A comment references both the user who created it and the blog it belongs to.
 
@@ -171,37 +174,38 @@ Report
 Stores reports submitted against blogs.
 
 Report
-├── subject
-├── blogId
-├── reportedBy
-├── createdAt
-└── updatedAt
+|
++-- subject
++-- blogId
++-- reportedBy
++-- createdAt
++-- updatedAt
 
 Reports are associated with both the reported blog and the user who submitted the report.
 
- Authentication & Authorization
+Authentication & Authorization
 
 The application uses JWT (JSON Web Token) for authentication.
 
 Authentication Flow
 User Login
-    │
-    ▼
+    |
+    v
 Verify Credentials
-    │
-    ▼
+    |
+    v
 Generate JWT
-    │
-    ▼
+    |
+    v
 Store JWT in HTTP-only Cookie
-    │
-    ▼
+    |
+    v
 Authenticated Requests
-    │
-    ▼
+    |
+    v
 Authentication Middleware
-    │
-    ▼
+    |
+    v
 req.user
 
 The authentication middleware verifies the JWT from the cookie and attaches the authenticated user's information to req.user.
@@ -211,20 +215,20 @@ Authorization
 A separate authorization middleware is used to restrict admin functionality.
 
 Request
-   │
-   ▼
+   |
+   v
 Authentication
-   │
-   ▼
+   |
+   v
 Authorization
-   │
-   ├── USER  ──► Normal User Routes
-   │
-   └── ADMIN ──► Admin Routes
+   |
+   +-- USER  ---> Normal User Routes
+   |
+   +-- ADMIN ---> Admin Routes
 
 The /admin route group is protected so that only authorized administrators can access it.
 
- Middleware
+Middleware
 
 The application uses three main middleware modules.
 
@@ -250,87 +254,88 @@ Responsible for handling blog cover image uploads.
 The image upload flow is:
 
 Image Selected
-      │
-      ▼
+      |
+      v
     Multer
-      │
-      ▼
+      |
+      v
 Temporary File
-      │
-      ▼
+      |
+      v
   Cloudinary
-      │
-      ▼
+      |
+      v
 Cloudinary URL
-      │
-      ▼
+      |
+      v
  Blog Document
-      │
-      ▼
+      |
+      v
    MongoDB
- Routing
+Routing
 
 The application has four route files:
 
 routes/
-├── admin.js
-├── blog.js
-├── report.js
-└── user.js
+|
++-- admin.js
++-- blog.js
++-- report.js
++-- user.js
 
-They are mounted in the main application as:
+They are mounted in the main application as follows:
 
 Router	Base Path	Purpose
 admin.js	/admin	Admin dashboard and administration
 blog.js	/blog	Blog and comment functionality
 user.js	/user	Authentication and user functionality
 report.js	/report	Blog reporting functionality
- Routing Table
+Routing Table
 User Routes
 Method	Route	Authentication	Description
-GET	/user/signup	❌	Display signup page
-POST	/user/signup	❌	Register a new user
-GET	/user/signin	❌	Display signin page
-POST	/user/signin	❌	Authenticate user and create JWT
-GET	/user/logout	✅	Logout the current user
+GET	/user/signup	No	Display signup page
+POST	/user/signup	No	Register a new user
+GET	/user/signin	No	Display signin page
+POST	/user/signin	No	Authenticate user and create JWT
+GET	/user/logout	Yes	Logout the current user
 Blog Routes
 Method	Route	Authentication	Description
-GET	/blog/add-new	✅	Display create-blog page
-POST	/blog/	✅	Create a new blog
-GET	/blog/:id	❌	View a specific blog
-POST	/blog/comment/:blogId	✅	Add a comment to a blog
-GET	/blog/user/myblogs/:id	✅	View blogs created by a user
-GET	/blog/editTitle/:id	✅	Display title editing page
-POST	/blog/editTitle/:id	✅	Update blog title
-GET	/blog/edit/:id	✅	Display blog editing page
-POST	/blog/editBlog/:id	✅	Update blog content
-DELETE	/blog/delete/:id	✅	Delete a blog
+GET	/blog/add-new	Yes	Display create-blog page
+POST	/blog/	Yes	Create a new blog
+GET	/blog/:id	No	View a specific blog
+POST	/blog/comment/:blogId	Yes	Add a comment to a blog
+GET	/blog/user/myblogs/:id	Yes	View blogs created by a user
+GET	/blog/editTitle/:id	Yes	Display title editing page
+POST	/blog/editTitle/:id	Yes	Update blog title
+GET	/blog/edit/:id	Yes	Display blog editing page
+POST	/blog/editBlog/:id	Yes	Update blog content
+DELETE	/blog/delete/:id	Yes	Delete a blog
 Report Routes
 Method	Route	Authentication	Description
-POST	/report/:id	✅	Submit a report for a blog
-DELETE	/report/:id	✅	Delete/remove a report
+POST	/report/:id	Yes	Submit a report for a blog
+DELETE	/report/:id	Yes	Delete/remove a report
 
 When a report is created, the corresponding blog's report count is increased.
 
 Admin Routes
 Method	Route	Authorization	Description
-GET	/admin/	🔐 Admin	Display admin dashboard
-GET	/admin/users	🔐 Admin	View registered users
-GET	/admin/reported-blogs	🔐 Admin	View reported blogs
-GET	/admin/blog/:id	🔐 Admin	View a reported blog and its reports
-Route Protection
+GET	/admin/	Admin	Display admin dashboard
+GET	/admin/users	Admin	View registered users
+GET	/admin/reported-blogs	Admin	View reported blogs
+GET	/admin/blog/:id	Admin	View a reported blog and its reports
+Admin Route Protection
 /admin/*
-    │
-    ▼
+    |
+    v
 Authentication
-    │
-    ▼
+    |
+    v
 Authorization
-    │
-    ├── Admin ──► Continue
-    │
-    └── User ──► Access Denied
- Blog Management
+    |
+    +-- Admin ---> Continue
+    |
+    +-- User ----> Access Denied
+Blog Management
 
 Users can perform CRUD operations on their own blogs.
 
@@ -357,51 +362,54 @@ Users can delete their own blogs.
 
 When a blog is deleted, its related comments and reports are also removed, and the associated Cloudinary image is deleted.
 
- Comment System
+Comment System
 
 Authenticated users can comment on blogs.
 
 User
- │
- ▼
+ |
+ v
 Blog
- │
- ▼
+ |
+ v
 Add Comment
- │
- ▼
+ |
+ v
 Comment Collection
- │
- ├── User Reference
- └── Blog Reference
+ |
+ +-- User Reference
+ |
+ +-- Blog Reference
 
 Comments maintain references to both the user and the blog.
 
- Reporting System
+Reporting System
 
 Users can report blogs that they consider inappropriate.
 
 User
- │
- ▼
+ |
+ v
 Report Blog
- │
- ▼
+ |
+ v
 Create Report
- │
- ├── User
- ├── Blog
- └── Subject
- │
- ▼
+ |
+ +-- User
+ |
+ +-- Blog
+ |
+ +-- Subject
+ |
+ v
 Increment Report Count
- │
- ▼
+ |
+ v
 Admin Dashboard
 
 Administrators can review reported blogs and inspect the reports associated with them.
 
- Admin Dashboard
+Admin Dashboard
 
 The admin dashboard provides functionality for managing the application.
 
@@ -413,7 +421,7 @@ View reported blogs
 View individual reports
 Review reported content
 Delete blogs when necessary
- Search & Categories
+Search & Categories
 
 The application provides blog discovery functionality through:
 
@@ -422,60 +430,60 @@ Category filtering
 
 This allows users to find blogs based on their interests and search terms.
 
- Server-Side Rendering
+Server-Side Rendering
 
 The frontend is rendered using EJS rather than a separate frontend framework.
 
 The request flow is:
 
 Browser
-   │
-   ▼
+   |
+   v
 Express Route
-   │
-   ▼
+   |
+   v
 Database Query
-   │
-   ▼
+   |
+   v
 Mongoose
-   │
-   ▼
+   |
+   v
 Data
-   │
-   ▼
+   |
+   v
 EJS Template
-   │
-   ▼
+   |
+   v
 Rendered HTML
-   │
-   ▼
+   |
+   v
 Browser
 
 This approach keeps the frontend and backend within the same Express application.
 
- Cloudinary Integration
+Cloudinary Integration
 
 Cloudinary is used to store blog cover images.
 
 Instead of storing image files directly in MongoDB, the application stores the Cloudinary URL in the blog document.
 
 User Upload
-     │
-     ▼
+     |
+     v
    Multer
-     │
-     ▼
+     |
+     v
  Cloudinary
-     │
-     ▼
+     |
+     v
  Image URL
-     │
-     ▼
+     |
+     v
  MongoDB
 
 This keeps the database lightweight while allowing images to be managed through Cloudinary.
 
- Installation
+Installation
 1. Clone the repository
 git clone https://github.com/Sagnik-Chatterjee/Meridian-Blog.git
 cd Meridian-Blog
@@ -506,7 +514,7 @@ npm start
 The application will be available at:
 
 http://localhost:8000
- Key Concepts Demonstrated
+Key Concepts Demonstrated
 
 This project demonstrates practical experience with:
 
@@ -530,7 +538,7 @@ Comments
 Content Reporting
 Admin Dashboard
 Error Handling
- Learning Outcomes
+Learning Outcomes
 
 Through this project, I gained practical experience in building a complete web application with:
 
@@ -544,15 +552,16 @@ Role-based access control
 User-generated content
 Admin moderation
 Relational references between MongoDB collections
- Links
+Links
+Live Demo
 
-Live Demo:
 https://meridian-blog.onrender.com
 
-GitHub Repository:
+GitHub Repository
+
 https://github.com/Sagnik-Chatterjee/Meridian-Blog
 
- Author
+Author
 
 Sagnik Chatterjee
 
